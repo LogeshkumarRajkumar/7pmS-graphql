@@ -7,12 +7,19 @@ const {
   GraphQLList
 } = require('graphql')
 
-const a = fetch(
-  'https://api.abalin.net/today'
-)
-.then(response => console.log(response.json()))
-//.then(response)
-//console.log(a);
+const User = new GraphQLObjectType({
+  name: 'UserQuery',
+  description: 'user details',
+
+  fields: () => ({
+    first_name: {
+      type: GraphQLString,
+    },
+    last_name: {
+      type: GraphQLString
+    }
+  })
+})
 
 const CompanyType =new GraphQLObjectType({
   name: 'Company',
@@ -22,13 +29,17 @@ const CompanyType =new GraphQLObjectType({
       companyName: {
           type: GraphQLString,
           resolve: response => response.name
+      },
+      user: {
+        type: User,
+        resolve: response => response.creator
       }
   })
 })
 
 module.exports = new GraphQLSchema({
   query: new GraphQLObjectType({
-    name: 'Companuery',
+    name: 'CompanyQuery',
     description: 'Fetch all company details',
 
     fields: () => ({
@@ -38,8 +49,7 @@ module.exports = new GraphQLSchema({
           'http://127.0.0.1:8000/authentication/register'
         )
         .then(response => response.json())//response => console.log(response))
-        .then(json => json)
       }
-    })
+    }) 
   })
 })
