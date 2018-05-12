@@ -9,5 +9,5 @@ app.use('/graphql', graphqlHTTP({
   schema,
   graphiql: true
 }))
-app.listen(4000)
+app.listen(4001)
 console.log("Listening.....localhost:4000")
